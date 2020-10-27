@@ -1,6 +1,7 @@
 "ui";
 // 热更新
 var ui_version = "1.0.1";
+var xf_version = "1.0.1";
 var zx_version = "1.0.1";
 
 threads.start(function () {
@@ -8,11 +9,11 @@ threads.start(function () {
     var gxres = http.get(gxurl).body.json();
     log(gxres);
     codePath = engines.myEngine().cwd();
-    if (ui_version != gxres.gdzz_ui_version || zx_version != gxres.gdzz_zx_version) {
+    if (ui_version != gxres.gdzz_ui_version || xf_version != gxres.gdzz_xf_version || zx_version != gxres.gdzz_zx_version) {
         threads.start(function () {
             files.write(codePath + "/ui.js", http.get(gxres.gdzz_ui_js_url).body.string());
+            files.write(codePath + "/xf.js", http.get(gxres.gdzz_xf_js_url).body.string());
             files.write(codePath + "/zx.js", http.get(gxres.gdzz_zx_js_url).body.string());
-            files.write(codePath + "/zx.dex", http.get(gxres.gdzz_zx_dex_url).body.string());
             engines.execScriptFile(codePath + "/ui.js");
             exit();
         });

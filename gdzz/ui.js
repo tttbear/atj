@@ -8,19 +8,15 @@ threads.start(function () {
     var gxres = http.get(gxurl).body.json();
     log(gxres);
     codePath = engines.myEngine().cwd();
-    if (ui_version != gxres.gdzz_zx_version) {
+    if (ui_version != gxres.gdzz_zx_version || zx_version != gxres.gdzz_zx_version) {
         threads.start(function () {
             files.write(codePath + "/ui.js", http.get(gxres.gdzz_ui_js_url).body.string());
-        });
-    }
-    if (zx_version != gxres.gdzz_zx_version) {
-        threads.start(function () {
             files.write(codePath + "/zx.js", http.get(gxres.gdzz_zx_js_url).body.string());
             files.write(codePath + "/zx.dex", http.get(gxres.gdzz_zx_dex_url).body.string());
         });
+        engines.execScriptFile(codePath + "/ui.js");
+        exit();
     }
-    engines.execScriptFile(codePath + "/ui.js");
-    exit();
 });
 
 // 首次运行脚本时设置悬浮窗状态为假

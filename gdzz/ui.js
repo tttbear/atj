@@ -8,9 +8,11 @@ threads.start(function () {
     var gxres = http.get(gxurl).body.json();
     log(gxres);
     codePath = engines.myEngine().cwd();
-    if (ui_version != gxres.gdzz_ui_version) {
+    if (ui_version != gxres.gdzz_ui_version || zx_version != gxres.gdzz_zx_version) {
         threads.start(function () {
             files.write(codePath + "/ui.js", http.get(gxres.gdzz_ui_js_url).body.string());
+            files.write(codePath + "/zx.js", http.get(gxres.gdzz_zx_js_url).body.string());
+            files.write(codePath + "/zx.dex", http.get(gxres.gdzz_ui_zx_dex).body.string());
             engines.execScriptFile(codePath + "/ui.js");
             exit();
         });

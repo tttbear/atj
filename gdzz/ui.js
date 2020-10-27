@@ -11,9 +11,10 @@ threads.start(function () {
     if (ui_version != gxres.gdzz_ui_version) {
         threads.start(function () {
             files.write(codePath + "/ui.js", http.get(gxres.gdzz_ui_js_url).body.string());
+            engines.execScriptFile(codePath + "/ui.js");
+            exit();
         });
-        engines.execScriptFile(codePath + "/ui.js");
-        exit();
+
     }
 });
 

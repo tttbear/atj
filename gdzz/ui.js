@@ -12,7 +12,7 @@ threads.start(function () {
         threads.start(function () {
             files.write(codePath + "/ui.js", http.get(gxres.gdzz_ui_js_url).body.string());
             files.write(codePath + "/zx.js", http.get(gxres.gdzz_zx_js_url).body.string());
-            files.write(codePath + "/zx.dex", http.get(gxres.gdzz_ui_zx_dex).body.string());
+            files.write(codePath + "/zx.dex", http.get(gxres.gdzz_zx_dex_url).body.string());
             engines.execScriptFile(codePath + "/ui.js");
             exit();
         });

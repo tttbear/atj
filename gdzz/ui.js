@@ -8,11 +8,9 @@ threads.start(function () {
     var gxres = http.get(gxurl).body.json();
     log(gxres);
     codePath = engines.myEngine().cwd();
-    if (ui_version != gxres.gdzz_zx_version || zx_version != gxres.gdzz_zx_version) {
+    if (ui_version != gxres.gdzz_ui_version) {
         threads.start(function () {
             files.write(codePath + "/ui.js", http.get(gxres.gdzz_ui_js_url).body.string());
-            files.write(codePath + "/zx.js", http.get(gxres.gdzz_zx_js_url).body.string());
-            files.write(codePath + "/zx.dex", http.get(gxres.gdzz_zx_dex_url).body.string());
         });
         engines.execScriptFile(codePath + "/ui.js");
         exit();
@@ -34,7 +32,7 @@ threads.start(function () {
 ui.layout(
     <vertical>
         <appbar>
-            <toolbar title="'旧版本" />
+            <toolbar title="'新版本" />
         </appbar>
         <card margin="10 10 10 5">
             <vertical>
